@@ -1,0 +1,21 @@
+os: linux
+ 
+sudo: required
+dist: trusty
+
+before_install:
+  - sudo apt-get install texlive-latex-base
+
+script:
+  - pdflatex test.tex
+
+install:
+
+deploy:
+  provider: releases
+  api_key: $deployKey
+  file: "test.pdf"
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true

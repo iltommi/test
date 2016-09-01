@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  basicstyle=\linespread{0.85}\ttfamily\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  otherkeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{black}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  numbers=none,
+}
+
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks = true,linkcolor = blue]{hyperref}
+\usepackage{times}
+
+
+\begin{document}
+
+
+\title{TP: integrating github project with travis}
+\author{Tommaso Vinci}
+\date{\today}
+\maketitle
+
+
+\section*{Create repository}
+
+\subsection*{From scratch}
+
+Go to \url{https://github.com/iltommi?tab=repositories} Click on \emph{New}
+
+In the following page fill the \emph{Repository name} (here \texttt{test}) and optionally the \emph{Description}. Let the repo public and click on \emph{Create repository}.
+
+Then in a terminal:
+
+\begin{lstlisting}[language=Bash] 
+git clone git@github.com:iltommi/test.git
+git add test.tex README.md .travis.yml
+git commit -m "First commit"
+git push -u origin master
+\end{lstlisting}
+
+The last command will ask for your Github credentials.
+
+\subsection*{From my repo}
+Sign in to Github and go to \url{https://github.com/iltommi/test.}
+
+
+
+
+\section*{Sync repo with Travis}
+
+Go to \url{https://travis-ci.org/profile/iltommi} and click on \emph{Sync account}
+
+below an \emph{iltommi/test} should appear: toggle it (should become green).
+
+got to \url{https://github.com/settings/tokens} click on \texttt{Generate new token}. Type in your password
+
+Type \texttt{deployToken} in the \emph{Token description}. Ceck the \emph{repo} scope.
+
+Click on \emph{Generate token}. In the following page copy in the clipboard the generated string (this will be the only chance you have to copy).
+
+Go to \url{https://travis-ci.org/iltommi/test/settings}. 
+
+Check the \emph{Build only if .travis.yml is present}.
+
+In the \emph{Environment Variables} section, type in a name for the variable (\emph{e.g.} \texttt{deployKey}) and paste in the \emph{Value} field the string you copied before on Github. Click on \emph{Add}.
+
+Now every push will trigger a build and if the commit is a tagged commit, the generated pdf will be uploaded to \url{https://github.com/iltommi/test/releases}.
+
+To tag a commit:
+\begin{lstlisting}[language=Bash] 
+git tag -a v1.0 -m "my version 1.0"
+git push origin v1.0
+\end{lstlisting}
+
+To move the current tag to the current commit (to trigger a deploy):
+\begin{lstlisting}[language=Bash] 
+git push origin :refs/tags/v1.0
+git tag -fa v1.0
+git push origin master --tags
+\end{lstlisting}
+
+\section*{File \texttt{.travis.yml}}
+
+\lstinputlisting{.travis.yml}
+
+
+
+\end{document}
