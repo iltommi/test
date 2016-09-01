@@ -4,7 +4,7 @@ sudo: required
 dist: trusty
 
 before_install:
-- sudo apt-get install texlive-latex-base texlive-latex-recommended
+- sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
 
 script:
   - pdflatex test.tex
