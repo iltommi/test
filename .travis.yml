@@ -5,16 +5,20 @@ dist: trusty
 
 before_install:
 - sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
+- sudo apt-get install libreoffice
 
 script:
   - pdflatex test.tex
+  - libreoffice --headless --convert-to pdf *.odt
 
 install:
 
 deploy:
   provider: releases
   api_key: $deployKey
-  file: "test.pdf"
+  file: 
+    - test.pdf
+    - Group-meeting201609.pdf    
   skip_cleanup: true
   overwrite: true
   on:
