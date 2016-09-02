@@ -10,6 +10,7 @@ before_install:
 script:
   - pdflatex test.tex
   - libreoffice --headless --convert-to pdf *.odt
+  - ls -la
 
 install:
 
