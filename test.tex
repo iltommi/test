@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+I\documentclass[12pt]{article}
 
 \usepackage[top=50pt,bottom=50pt,left=50pt,right=50pt]{geometry}
 
@@ -50,17 +50,18 @@
 
 
 \section*{Create repository}
+Here \texttt{UserName} is your Github username.
 
 \subsection*{From scratch}
 
-Go to \url{https://github.com/iltommi?tab=repositories} Click on \emph{New}
+Go to \url{https://github.com/UserName?tab=repositories} Click on \emph{New}
 
 In the following page fill the \emph{Repository name} (here \texttt{test}) and optionally the \emph{Description}. Let the repo public and click on \emph{Create repository}.
 
 Then in a terminal:
 
 \begin{lstlisting}[language=Bash] 
-git clone git@github.com:iltommi/test.git
+git clone git@github.com:UserName/test.git
 git add test.tex README.md .travis.yml
 git commit -m "First commit"
 git push -u origin master
@@ -69,16 +70,16 @@ git push -u origin master
 The last command will ask for your Github credentials.
 
 \subsection*{From my repo}
-Sign in to Github and go to \url{https://github.com/iltommi/test.}
+Sign in to Github and go to \url{https://github.com/UserName/test.}
 
 
 
 
 \section*{Sync repo with Travis}
 
-Go to \url{https://travis-ci.org/profile/iltommi} and click on \emph{Sync account}
+Go to \url{https://travis-ci.org/profile/UserName} and click on \emph{Sync account}
 
-below an \emph{iltommi/test} should appear: toggle it (should become green).
+below an \emph{UserName/test} should appear: toggle it (should become green).
 
 got to \url{https://github.com/settings/tokens} click on \texttt{Generate new token}. Type in your password
 
@@ -86,13 +87,13 @@ Type \texttt{deployToken} in the \emph{Token description}. Ceck the \emph{repo} 
 
 Click on \emph{Generate token}. In the following page copy in the clipboard the generated string (this will be the only chance you have to copy).
 
-Go to \url{https://travis-ci.org/iltommi/test/settings}. 
+Go to \url{https://travis-ci.org/UserName/test/settings}. 
 
 Check the \emph{Build only if .travis.yml is present}.
 
 In the \emph{Environment Variables} section, type in a name for the variable (\emph{e.g.} \texttt{deployKey}) and paste in the \emph{Value} field the string you copied before on Github. Click on \emph{Add}.
 
-Now every push will trigger a build and if the commit is a tagged commit, the generated pdf will be uploaded to \url{https://github.com/iltommi/test/releases}.
+Now every push will trigger a build and if the commit is a tagged commit, the generated pdf will be uploaded to \url{https://github.com/UserName/test/releases}.
 
 To tag a commit:
 \begin{lstlisting}[language=Bash] 
